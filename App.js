@@ -35,13 +35,7 @@ useEffect(() => {
 
 
  useEffect(() => {
-
-
-  
         guardarTema();
-
-
-
  }, [check]);
 
 

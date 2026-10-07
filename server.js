@@ -38,21 +38,21 @@ app.get("/",(req, res)=>{
 });
 
 
-
-app.get("/consumirJuegos", async (req, res)=>{
+//ruta para consumir los hechizos de la base de datos
+app.get("/consumirHechizos", async (req, res)=>{
     try{
 
-        console.log("Llegó una petición GET a /consumirJuegos");
+        console.log("Llegó una petición GET a /consumirHechizos");
 
-             const result = await pool.query("SELECT * FROM juegos");
+             const result = await pool.query("SELECT * FROM hechizos");
 
 
 
         
         res.json({
-            message: "Juegos obtenidos exitosamente",
+            message: "Hechizos obtenidos exitosamente",
             status: "ok",
-            data: result.rows
+            rows: result.rows
         });
 
     }catch(error){

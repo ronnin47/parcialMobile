@@ -19,30 +19,38 @@ export const PantallaPrincipal=({check, setCheck})=>{
     const [descripcion, setDescripcion] = useState("");
     const [imagen, setImagen] = useState("");
 
+    const [coleccionHechizos, setColeccionHechizos]=useState([]);
+
    //es un evento que cuando caraga la pantalla se ejecuta el codigo que esta dentro de useEffect
    //se consumiran los juegos de la api
     useEffect(   ()=>{
-       consumirJuegos();
+       consumirHechizos();
     }   , []  );
 
 
 
   //peticion a la api
-    const consumirJuegos=  async ()=>{
+    const consumirHechizos=  async ()=>{
 
          try{
 
-                 const response =  await axios.get(`${API_URL}/consumirJuegos`);
+            const response =  await axios.get(`${API_URL}/consumirHechizos`);
 
-                response.data.data.forEach(juego => {
+            //console.log(response.data.message);
 
-    console.log(juego.id);
-    console.log(juego.titulo);
-    console.log(juego.descripcion);
-    console.log(juego.imagen);
+            setColeccionHechizos(response.data.rows);
+       
+            /*
+            coleccionHechizos.map((hechizo)=>{
+                console.log(`Hechizo: ${hechizo.nombre} 
+                    ${hechizo.descripcion}
+                    ${hechizo.sistema}
+                    ${hechizo.imagen_url}
+                    ${hechizo.tiempo_invocacion}
+                    `);
 
-});
-
+            })
+           */
 
          }catch(error){
 
@@ -81,21 +89,28 @@ const agregarJuego= async ()=>{
 
 return(
 
-    <View >
+    <View style={styles.container}> 
 
-     <TextInput style={styles.input} onChangeText={setTitulo} value={titulo} placeholder="Título"></TextInput>
-     <TextInput style={styles.input} onChangeText={setDescripcion} value={descripcion} placeholder="Descripción"></TextInput>
-     <TextInput style={styles.input} onChangeText={setImagen} value={imagen} placeholder="Imagen"></TextInput>
+     
+     {/* <Checkbox style={styles.checkbox} value={check} onValueChange={setCheck}></Checkbox>*/}
 
-     <TouchableOpacity style={styles.button} onPress={()=>{agregarJuego()}}>
-          <Text style={{color:'white'}}>Agregar Juego</Text>
-     </TouchableOpacity>
+      
 
 
-      <Checkbox style={styles.checkbox} value={check} onValueChange={setCheck}></Checkbox>
 
-   
+     {/* aca vamos a mapear para renderizar los juegos */}
 
+
+
+     {coleccionHechizos.length>0 ? 
+     (coleccionHechizos.map((hechizo)=>(
+        <Text key={hechizo.id}>
+            {hechizo.nombre} - {hechizo.descripcion}
+        </Text>
+     ))) : (
+     <Text>No hay hechizos disponibles</Text>
+     )}
+  
 
     </View>
 )
@@ -115,16 +130,13 @@ return(
 
 
 
-
-
-
-
-
-
-
 const styles= StyleSheet.create(
     {
-
+    container:{
+        padding: 20,
+        flex: 1,
+       marginTop: 100,
+    },
         input:{
             height: 40,
             width: 200,
