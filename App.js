@@ -13,45 +13,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function App() {
 
 
- const [check, setCheck] = useState(false);
-
-
-useEffect(() => {
-
-    const cargarTema = async () => {
-
-        const tema = await AsyncStorage.getItem("tema");
-
-        if (tema !== null) {
-            setCheck(JSON.parse(tema));
-        }
-    };
-
-    cargarTema();
-
-}, []);
+ 
 
 
 
 
- useEffect(() => {
-        guardarTema();
- }, [check]);
-
-
-
-
-const guardarTema=()=>{
-    
-        AsyncStorage.setItem('tema', JSON.stringify(check))
-
-}
 
 
   return (
-    <View style={ check ? styles.claro : styles.oscuro}>
+    <View style={ styles.claro}>
       
-     <PantallaPrincipal check={check} setCheck={setCheck}/>
+     <PantallaPrincipal />
 
     </View>
   );
@@ -69,10 +41,10 @@ const styles = StyleSheet.create({
         },
          oscuro:{
             flex:1,
-            backgroundColor:'#333',
+         
             color:'#fff',
-             justifyContent: 'center',
-             alignItems: 'center'
+            justifyContent: 'center',
+            alignItems: 'center'
              
         },
 });
