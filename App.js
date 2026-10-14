@@ -1,4 +1,5 @@
 
+//---------IMPORTACIONES-----------
 import { StyleSheet, Text, View } from 'react-native';
 import {PantallaPrincipal} from './components/pantallaPrincipal';
 
@@ -8,15 +9,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
+//LOGICA DE JS PARA LO QUE MUESTRA
 
-
-export default function App() {
+/*LA EXPORTACION DE LA FUNCION*/  export default function App() {
 
 
  const [check, setCheck] = useState(false);
 
 
-useEffect(() => {
+useEffect(() => /*el useefect, dos partes, la funcion y donde va a ocurrir o meter*/{
 
     const cargarTema = async () => {
 
@@ -29,16 +30,12 @@ useEffect(() => {
 
     cargarTema();
 
-}, []);
+}, /*en este caso va a ocurrir en la pantalla al iniciar*/ []);
 
 
-
-
- useEffect(() => {
+ useEffect(() => {/*ejecuta la funcion guardar tema y luego lo mete dentrode check*/ 
         guardarTema();
  }, [check]);
-
-
 
 
 const guardarTema=()=>{
@@ -48,6 +45,7 @@ const guardarTema=()=>{
 }
 
 
+//-------LO QUE MOSTRARA EN PANTALLA------------
   return (
     <View style={ check ? styles.claro : styles.oscuro}>
       
@@ -57,6 +55,9 @@ const guardarTema=()=>{
   );
 }
 
+
+
+//--------ESTILOS----------
 const styles = StyleSheet.create({
  
         claro:{

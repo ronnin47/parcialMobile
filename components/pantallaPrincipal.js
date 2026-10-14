@@ -1,10 +1,15 @@
+//------------IMPORTACIONES--------------------
 import { View, ScrollView, Text, StyleSheet, TextInput, TouchableOpacity} from "react-native";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Checkbox from 'expo-checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_URL = "http://192.168.100.2:3000";
+
+
+//--------------LOGICA JS-------------
+
+const API_URL = "http://192.168.1.37:3000";
 //const API_URL = "http://localhost:3000";
 
 
@@ -19,38 +24,31 @@ export const PantallaPrincipal=({check, setCheck})=>{
     const [descripcion, setDescripcion] = useState("");
     const [imagen, setImagen] = useState("");
 
-    const [coleccionHechizos, setColeccionHechizos]=useState([]);
+    const [colleccionHechizos, setColleccionHechizos]= useState([]);
 
+    
    //es un evento que cuando caraga la pantalla se ejecuta el codigo que esta dentro de useEffect
    //se consumiran los juegos de la api
     useEffect(   ()=>{
-       consumirHechizos();
+        consumirHechizos();
     }   , []  );
 
+    
 
 
   //peticion a la api
     const consumirHechizos=  async ()=>{
 
          try{
+            console.log("ENTRÉ A CONSUMIR HECHIZOS");
 
             const response =  await axios.get(`${API_URL}/consumirHechizos`);
+            console.log("datos:",response.data);
 
-            //console.log(response.data.message);
+            setColleccionHechizos(response.data.rows);
 
-            setColeccionHechizos(response.data.rows);
-       
-            /*
-            coleccionHechizos.map((hechizo)=>{
-                console.log(`Hechizo: ${hechizo.nombre} 
-                    ${hechizo.descripcion}
-                    ${hechizo.sistema}
-                    ${hechizo.imagen_url}
-                    ${hechizo.tiempo_invocacion}
-                    `);
+            console.log("DESPUÉS DEL AXIOS");
 
-            })
-           */
 
          }catch(error){
 
@@ -85,7 +83,7 @@ const agregarJuego= async ()=>{
 
 
 
-//
+//--------------VISUALIZACION------------
 
 return(
 
@@ -99,17 +97,16 @@ return(
 
 
      {/* aca vamos a mapear para renderizar los juegos */}
+       {colleccionHechizos.map(hechizo=>(<Text>
+        {hechizo.nombre}
+        {hechizo.descripcion}
+        {hechizo.imagen_url}
+        {hechizo.sistema}
+        {hechizo.tiempo_invocacion} 
+        </Text>))}
 
 
-
-     {coleccionHechizos.length>0 ? 
-     (coleccionHechizos.map((hechizo)=>(
-        <Text key={hechizo.id}>
-            {hechizo.nombre} - {hechizo.descripcion}
-        </Text>
-     ))) : (
-     <Text>No hay hechizos disponibles</Text>
-     )}
+     
   
 
     </View>
@@ -118,16 +115,7 @@ return(
 }
 
 
-
-
-
-
-
-
-
-
-
-
+//--------------ESTILOS------------
 
 
 const styles= StyleSheet.create(

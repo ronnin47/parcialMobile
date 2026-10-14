@@ -111,5 +111,11 @@ app.listen( PORT, async ()=>{
 
     console.log(`El servidor esta corriendo en el puerto: ${PORT}`);
      await comprobarConexion();
+     try {
+        const res=await fetch(`http://localhost:${PORT}/consumirHechizos`)
+        const data= await res.json();
+        console.log(JSON.stringify(data,null,2));
+
+     }catch(error){console.log("error al consultar al endppoint", error.message)}
 
 }    );
