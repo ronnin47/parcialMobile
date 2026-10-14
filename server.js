@@ -44,7 +44,7 @@ app.get("/consumirHechizos", async (req, res)=>{
 
         //console.log("Llegó una petición GET a /consumirHechizos");
 
-         const result = await pool.query("SELECT * FROM hechizos");
+         const result = await pool("SELECT * FROM hechizos");
 
 
 

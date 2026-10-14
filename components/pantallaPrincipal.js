@@ -74,7 +74,7 @@ return(
         imagenUrl={hechizo.imagen_url}></CardHechizo>
     )
    )
-  ) : (
+  )  (
     <Text>No hay hechizos disponibles</Text>
   )}
 
@@ -86,7 +86,7 @@ return(
 
 
 
-const CardHechizo=({nombre,descripcion,tInvo,imagenUrl})=>{
+const CardHechizo=(nombre,descripcion,tInvo,imagenUrl)=>{
 
   return(
    <View style={styles.card}>
